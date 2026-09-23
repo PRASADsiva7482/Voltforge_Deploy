@@ -1,0 +1,53 @@
+/* ==========================================================================
+   Voltforge Admin Console Theme - v-app-admin.css
+   Authentic Dark Obsidian & Electric Volt Teal Accents
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Loading container branding */
+.keycloak__loading-container {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    background-color: #06070a !important;
+}
+
+#loading-text {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    background: linear-gradient(135deg, #ffffff, #06b6d4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+/* Custom spinner color */
+.pf-v5-c-spinner__path {
+    stroke: #06b6d4 !important;
+}
+
+/* Masthead/header branding */
+.pf-v5-c-masthead {
+    --pf-v5-c-masthead--BackgroundColor: #0a0e17 !important;
+    border-bottom: 1px solid rgba(8, 127, 131, 0.25) !important;
+}
+
+.pf-v5-c-masthead__brand img {
+    max-height: 36px;
+}
+
+/* Nav sidebar accent */
+.pf-v5-c-nav__link.pf-m-current {
+    border-left-color: #06b6d4 !important;
+    color: #06b6d4 !important;
+}
+
+/* Primary buttons */
+.pf-v5-c-button.pf-m-primary {
+    --pf-v5-c-button--m-primary--BackgroundColor: #087f83 !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease !important;
+}
+
+.pf-v5-c-button.pf-m-primary:hover {
+    --pf-v5-c-button--m-primary--hover--BackgroundColor: #06666a !important;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.4) !important;
+}

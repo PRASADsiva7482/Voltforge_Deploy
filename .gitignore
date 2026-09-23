@@ -1,0 +1,15 @@
+# Secrets & Credentials
+*.env
+!*.env.example
+
+# Tarballs & Archives
+*.tar.gz
+*.zip
+*.tar
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Logs
+*.log

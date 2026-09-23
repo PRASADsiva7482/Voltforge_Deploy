@@ -1,0 +1,137 @@
+{
+  "realm": "voltforge-realm",
+  "enabled": true,
+  "displayName": "VoltForge Platform",
+  "sslRequired": "NONE",
+  "registrationAllowed": true,
+  "loginWithEmailAllowed": true,
+  "loginTheme": "v-app",
+  "accountTheme": "v-app",
+  "adminTheme": "v-app",
+  "emailTheme": "v-app",
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "ROLE_USER",
+        "description": "Standard VoltForge user role"
+      },
+      {
+        "name": "ROLE_ADMIN",
+        "description": "VoltForge administrator role"
+      },
+      {
+        "name": "USER",
+        "description": "VoltForge regular user"
+      },
+      {
+        "name": "ADMIN",
+        "description": "VoltForge administrator"
+      },
+      {
+        "name": "ENGINEER",
+        "description": "Hardware / Simulation engineer"
+      }
+    ]
+  },
+  "groups": [],
+  "clients": [
+    {
+      "clientId": "VOLT-UI",
+      "name": "VoltForge Frontend SPA",
+      "description": "Public client for React single-page application",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "rootUrl": "",
+      "baseUrl": "/",
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ]
+    },
+    {
+      "clientId": "VOLT-Canvas",
+      "name": "VoltForge Backend Resource Server",
+      "description": "Confidential client for Spring Boot REST and WebSocket API",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "BpJfF6q1sdld27MOOXonOFC84GZlHyrC",
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ]
+    },
+    {
+      "clientId": "voltforge-app",
+      "name": "VoltForge App API",
+      "description": "Secondary API client",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "BpJfF6q1sdld27MOOXonOFC84GZlHyrC",
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@voltforge.io",
+      "firstName": "VoltForge",
+      "lastName": "Admin",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Admin@123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "ROLE_ADMIN",
+        "ROLE_USER",
+        "ADMIN",
+        "USER"
+      ]
+    },
+    {
+      "username": "engineer",
+      "email": "engineer@voltforge.io",
+      "firstName": "VoltForge",
+      "lastName": "Engineer",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Engineer@123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "ROLE_USER",
+        "USER",
+        "ENGINEER"
+      ]
+    }
+  ]
+}

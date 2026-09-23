@@ -1,0 +1,247 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Grid Patterns -->
+    <pattern id="minorGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255, 255, 255, 0.018)" stroke-width="1" />
+    </pattern>
+    <pattern id="majorGrid" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="url(#minorGrid)" />
+      <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(8, 127, 131, 0.08)" stroke-width="1.2" />
+      <circle cx="100" cy="100" r="1.5" fill="rgba(6, 182, 212, 0.25)" />
+    </pattern>
+
+    <!-- Gradients -->
+    <linearGradient id="traceGradTeal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#087f83" stop-opacity="0.5" />
+      <stop offset="50%" stop-color="#06b6d4" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#087f83" stop-opacity="0.3" />
+    </linearGradient>
+
+    <linearGradient id="traceGradGold" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c98218" stop-opacity="0.4" />
+      <stop offset="50%" stop-color="#eab308" stop-opacity="0.75" />
+      <stop offset="100%" stop-color="#c98218" stop-opacity="0.3" />
+    </linearGradient>
+
+    <radialGradient id="viaGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.8" />
+      <stop offset="60%" stop-color="#087f83" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#087f83" stop-opacity="0" />
+    </radialGradient>
+
+    <filter id="circuitGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Base Grid Background -->
+  <rect width="1920" height="1080" fill="#08090d" />
+  <rect width="1920" height="1080" fill="url(#majorGrid)" />
+
+  <!-- Ambient Board Glows -->
+  <circle cx="280" cy="320" r="350" fill="rgba(8, 127, 131, 0.07)" filter="url(#circuitGlow)" />
+  <circle cx="1650" cy="750" r="400" fill="rgba(6, 182, 212, 0.06)" filter="url(#circuitGlow)" />
+  <circle cx="960" cy="100" r="500" fill="rgba(6, 182, 212, 0.08)" filter="url(#circuitGlow)" />
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════
+       LEFT PCB SYSTEM: Microcontroller / FPGA Core Footprint & Traces
+       ═══════════════════════════════════════════════════════════════════════════ -->
+  <g opacity="0.85" transform="translate(60, 140)">
+    <!-- IC Chip Package (QFP-48) -->
+    <rect x="120" y="160" width="160" height="160" rx="8" fill="#0c1018" stroke="rgba(6, 182, 212, 0.4)" stroke-width="2" />
+    <circle cx="140" cy="180" r="5" fill="#06b6d4" opacity="0.6" /> <!-- Pin 1 index -->
+    
+    <!-- Chip Die Center Badge -->
+    <rect x="150" y="190" width="100" height="100" rx="4" fill="#121722" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1" />
+    <text x="200" y="235" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="700" fill="#06b6d4" text-anchor="middle" letter-spacing="1">VOLTFORGE</text>
+    <text x="200" y="255" font-family="'JetBrains Mono', Consolas, monospace" font-size="9" fill="#94a3b8" text-anchor="middle" letter-spacing="1.5">VF-MCU-G1</text>
+    <text x="200" y="272" font-family="'JetBrains Mono', Consolas, monospace" font-size="8" fill="#64748b" text-anchor="middle">240MHz RISC-V</text>
+
+    <!-- Chip Pins Top -->
+    <g stroke="rgba(234, 179, 8, 0.6)" stroke-width="2">
+      <line x1="150" y1="160" x2="150" y2="140" />
+      <line x1="170" y1="160" x2="170" y2="140" />
+      <line x1="190" y1="160" x2="190" y2="140" />
+      <line x1="210" y1="160" x2="210" y2="140" />
+      <line x1="230" y1="160" x2="230" y2="140" />
+      <line x1="250" y1="160" x2="250" y2="140" />
+    </g>
+    <!-- Chip Pins Bottom -->
+    <g stroke="rgba(234, 179, 8, 0.6)" stroke-width="2">
+      <line x1="150" y1="320" x2="150" y2="340" />
+      <line x1="170" y1="320" x2="170" y2="340" />
+      <line x1="190" y1="320" x2="190" y2="340" />
+      <line x1="210" y1="320" x2="210" y2="340" />
+      <line x1="230" y1="320" x2="230" y2="340" />
+      <line x1="250" y1="320" x2="250" y2="340" />
+    </g>
+    <!-- Chip Pins Left -->
+    <g stroke="rgba(234, 179, 8, 0.6)" stroke-width="2">
+      <line x1="120" y1="190" x2="100" y2="190" />
+      <line x1="120" y1="210" x2="100" y2="210" />
+      <line x1="120" y1="230" x2="100" y2="230" />
+      <line x1="120" y1="250" x2="100" y2="250" />
+      <line x1="120" y1="270" x2="100" y2="270" />
+      <line x1="120" y1="290" x2="100" y2="290" />
+    </g>
+    <!-- Chip Pins Right -->
+    <g stroke="rgba(234, 179, 8, 0.6)" stroke-width="2">
+      <line x1="280" y1="190" x2="300" y2="190" />
+      <line x1="280" y1="210" x2="300" y2="210" />
+      <line x1="280" y1="230" x2="300" y2="230" />
+      <line x1="280" y1="250" x2="300" y2="250" />
+      <line x1="280" y1="270" x2="300" y2="270" />
+      <line x1="280" y1="290" x2="300" y2="290" />
+    </g>
+
+    <!-- Traces Routing Outward (45° chamfers) -->
+    <g fill="none" stroke="url(#traceGradTeal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M 150 140 L 150 100 L 100 50 L -40 50" />
+      <path d="M 170 140 L 170 80 L 130 40 L -40 40" />
+      <path d="M 190 140 L 190 60 L 160 30 L -40 30" />
+      <path d="M 210 140 L 210 50 L 240 20 L 400 20 L 450 70 L 450 250" />
+      <path d="M 230 140 L 230 70 L 270 30 L 420 30 L 470 80 L 470 350" />
+      <path d="M 250 140 L 250 90 L 290 50 L 440 50" />
+
+      <!-- Left Traces -->
+      <path d="M 100 190 L 60 190 L 20 150 L 20 60 L -40 60" />
+      <path d="M 100 210 L 50 210 L 10 170 L 10 90" />
+      <path d="M 100 230 L 40 230 L -20 290 L -40 290" />
+      <path d="M 100 250 L 50 250 L 20 280 L 20 420 L -40 420" />
+      <path d="M 100 270 L 60 270 L 30 300 L 30 460 L 80 510 L 200 510" />
+      <path d="M 100 290 L 70 290 L 40 320 L 40 500 L 90 550 L 320 550" />
+
+      <!-- Bottom Traces -->
+      <path d="M 150 340 L 150 380 L 110 420 L 110 580 L -40 580" />
+      <path d="M 170 340 L 170 400 L 140 430 L 140 620 L 260 740 L 400 740" />
+      <path d="M 190 340 L 190 420 L 220 450 L 220 640 L 350 770" />
+      <path d="M 210 340 L 210 440 L 260 490 L 360 490 L 410 540" />
+
+      <!-- Right Traces -->
+      <path d="M 300 190 L 340 190 L 370 160 L 450 160" />
+      <path d="M 300 210 L 360 210 L 390 180 L 460 180" />
+      <path d="M 300 250 L 350 250 L 380 280 L 420 280" />
+      <path d="M 300 270 L 370 270 L 410 310 L 410 420" />
+    </g>
+
+    <!-- Test Points & Vias -->
+    <g fill="#0c1018" stroke="#06b6d4" stroke-width="2">
+      <circle cx="440" cy="50" r="4.5" />
+      <circle cx="-40" cy="50" r="4.5" />
+      <circle cx="-40" cy="40" r="4.5" />
+      <circle cx="-40" cy="30" r="4.5" />
+      <circle cx="10" cy="90" r="4.5" />
+      <circle cx="200" cy="510" r="4.5" />
+      <circle cx="410" cy="540" r="4.5" />
+      <circle cx="450" cy="250" r="4.5" />
+      <circle cx="420" cy="280" r="4.5" />
+    </g>
+    <!-- Via Center Drill Holes -->
+    <g fill="#08090d">
+      <circle cx="440" cy="50" r="2" />
+      <circle cx="-40" cy="50" r="2" />
+      <circle cx="-40" cy="40" r="2" />
+      <circle cx="-40" cy="30" r="2" />
+      <circle cx="10" cy="90" r="2" />
+      <circle cx="200" cy="510" r="2" />
+      <circle cx="410" cy="540" r="2" />
+      <circle cx="450" cy="250" r="2" />
+      <circle cx="420" cy="280" r="2" />
+    </g>
+
+    <!-- Surface Mount Components (Resistor/Capacitor SMD 0805) -->
+    <g fill="#1e293b" stroke="rgba(234, 179, 8, 0.7)" stroke-width="1.5">
+      <rect x="340" y="186" width="16" height="8" rx="1.5" />
+      <rect x="345" y="246" width="16" height="8" rx="1.5" />
+      <rect x="50" y="206" width="8" height="16" rx="1.5" />
+      <rect x="186" y="70" width="8" height="16" rx="1.5" />
+    </g>
+    <text x="348" y="180" font-family="'JetBrains Mono', Consolas, monospace" font-size="8" fill="#eab308">R12 10k</text>
+    <text x="353" y="240" font-family="'JetBrains Mono', Consolas, monospace" font-size="8" fill="#06b6d4">C04 100nF</text>
+    <text x="70" y="222" font-family="'JetBrains Mono', Consolas, monospace" font-size="8" fill="#eab308">R01 4.7k</text>
+    <text x="202" y="80" font-family="'JetBrains Mono', Consolas, monospace" font-size="8" fill="#06b6d4">C08 22pF</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════
+       RIGHT PCB SYSTEM: Power Stage & Bus Lines
+       ═══════════════════════════════════════════════════════════════════════════ -->
+  <g opacity="0.85" transform="translate(1360, 160)">
+    <!-- High Power MOSFET / VRM Footprint (D2PAK) -->
+    <rect x="220" y="320" width="130" height="90" rx="4" fill="#0c1018" stroke="rgba(234, 179, 8, 0.4)" stroke-width="1.8" />
+    <rect x="235" y="335" width="100" height="40" rx="2" fill="#181d28" />
+    <text x="285" y="360" font-family="'JetBrains Mono', Consolas, monospace" font-size="10" font-weight="700" fill="#eab308" text-anchor="middle">TI CSD1953</text>
+    <text x="285" y="395" font-family="'JetBrains Mono', Consolas, monospace" font-size="8" fill="#64748b" text-anchor="middle">100V N-CH POWER</text>
+
+    <!-- Toroidal Inductor Footprint -->
+    <circle cx="100" cy="365" r="45" fill="none" stroke="rgba(8, 127, 131, 0.5)" stroke-width="3" stroke-dasharray="8 4" />
+    <circle cx="100" cy="365" r="30" fill="#0c1018" stroke="rgba(6, 182, 212, 0.4)" stroke-width="1.5" />
+    <text x="100" y="370" font-family="'JetBrains Mono', Consolas, monospace" font-size="9" fill="#06b6d4" text-anchor="middle">L1 4.7µH</text>
+
+    <!-- Multi-rail High Current Bus Lines -->
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <!-- +3.3V Rail (Gold) -->
+      <path d="M -160 120 L 80 120 L 140 180 L 380 180 L 440 240 L 440 520 L 520 600" stroke="url(#traceGradGold)" stroke-width="3.5" />
+      <!-- +5.0V Rail (Amber) -->
+      <path d="M -160 140 L 70 140 L 130 200 L 370 200 L 420 250 L 420 540 L 520 640" stroke="rgba(234, 179, 8, 0.45)" stroke-width="3" />
+      <!-- VCC / +12V Rail -->
+      <path d="M -160 160 L 60 160 L 120 220 L 360 220 L 400 260 L 400 560 L 520 680" stroke="rgba(245, 158, 11, 0.35)" stroke-width="2.5" />
+
+      <!-- High Speed Differential Pairs (Teal/Cyan) -->
+      <path d="M 40 20 L 180 20 L 260 100 L 460 100 L 540 180" stroke="url(#traceGradTeal)" stroke-width="1.8" />
+      <path d="M 40 32 L 175 32 L 255 112 L 455 112 L 535 192" stroke="url(#traceGradTeal)" stroke-width="1.8" />
+
+      <!-- Data Net routing to Inductor & Power Stage -->
+      <path d="M 100 320 L 100 240 L 160 180" stroke="url(#traceGradTeal)" stroke-width="2.5" />
+      <path d="M 145 365 L 220 365" stroke="rgba(234, 179, 8, 0.7)" stroke-width="4" />
+      <path d="M 350 365 L 430 365 L 490 425 L 490 560" stroke="url(#traceGradTeal)" stroke-width="2.5" />
+      <path d="M 285 410 L 285 480 L 210 555 L 70 555 L 0 625 L -160 625" stroke="url(#traceGradTeal)" stroke-width="2" />
+    </g>
+
+    <!-- Signal Pad Arrays -->
+    <g fill="#0c1018" stroke="#eab308" stroke-width="2">
+      <circle cx="-160" cy="120" r="5" />
+      <circle cx="-160" cy="140" r="5" />
+      <circle cx="-160" cy="160" r="5" />
+      <circle cx="540" cy="180" r="4.5" stroke="#06b6d4" />
+      <circle cx="535" cy="192" r="4.5" stroke="#06b6d4" />
+      <circle cx="490" cy="560" r="4.5" stroke="#06b6d4" />
+      <circle cx="-160" cy="625" r="4.5" stroke="#06b6d4" />
+    </g>
+
+    <!-- Technical Silk Screen Text -->
+    <text x="80" y="110" font-family="'JetBrains Mono', Consolas, monospace" font-size="9" fill="#eab308" letter-spacing="1">+3.3V BUS [MAIN]</text>
+    <text x="270" y="90" font-family="'JetBrains Mono', Consolas, monospace" font-size="9" fill="#06b6d4" letter-spacing="1">PCIE_TX_DIFF_P/N</text>
+    <text x="290" y="500" font-family="'JetBrains Mono', Consolas, monospace" font-size="9" fill="#64748b" letter-spacing="1">GND_PLANE_ISOLATION</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════
+       BOTTOM OSCILLOSCOPE SIGNAL WAVEFORM TRACE (Live Simulation Signal)
+       ═══════════════════════════════════════════════════════════════════════════ -->
+  <g opacity="0.6" transform="translate(0, 940)">
+    <!-- Oscilloscope Reference Grid Line -->
+    <line x1="0" y1="50" x2="1920" y2="50" stroke="rgba(8, 127, 131, 0.2)" stroke-dasharray="4 4" />
+    <line x1="0" y1="20" x2="1920" y2="20" stroke="rgba(255, 255, 255, 0.05)" stroke-dasharray="2 4" />
+    <line x1="0" y1="80" x2="1920" y2="80" stroke="rgba(255, 255, 255, 0.05)" stroke-dasharray="2 4" />
+
+    <!-- Analog / Digital Waveform Pulse Flowing Across Viewport -->
+    <path d="M 0 50 L 180 50 L 220 20 L 260 80 L 300 30 L 340 70 L 380 50 L 520 50 
+             L 530 15 L 610 15 L 620 85 L 700 85 L 710 15 L 790 15 L 800 85 L 880 85 L 890 50 
+             L 1080 50 L 1120 20 L 1160 80 L 1200 35 L 1240 65 L 1280 50 
+             L 1420 50 L 1430 15 L 1510 15 L 1520 85 L 1600 85 L 1610 15 L 1690 15 L 1700 50 L 1920 50"
+          fill="none" stroke="#06b6d4" stroke-width="1.8" stroke-linejoin="round" opacity="0.45" />
+
+    <text x="40" y="42" font-family="'JetBrains Mono', Consolas, monospace" font-size="9" fill="#087f83" letter-spacing="1.5">CH1: 2.50V / DIV  100MHz OSCILLOSCOPE WAVEFORM</text>
+    <text x="1680" y="42" font-family="'JetBrains Mono', Consolas, monospace" font-size="9" fill="#087f83" letter-spacing="1">SAMPLE RATE: 1.25 GS/s</text>
+  </g>
+
+  <!-- Engineering Board Watermark at Top Right -->
+  <g opacity="0.4" transform="translate(1720, 40)">
+    <text x="0" y="0" font-family="'JetBrains Mono', Consolas, monospace" font-size="10" font-weight="700" fill="#94a3b8" letter-spacing="2">VOLTFORGE EDA</text>
+    <text x="0" y="16" font-family="'JetBrains Mono', Consolas, monospace" font-size="8" fill="#64748b" letter-spacing="1.5">LAYER 1: TOP COPPER</text>
+    <text x="0" y="30" font-family="'JetBrains Mono', Consolas, monospace" font-size="8" fill="#64748b" letter-spacing="1.5">FAB: FR4 1.6mm ENIG</text>
+  </g>
+</svg>

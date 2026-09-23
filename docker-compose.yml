@@ -1,0 +1,89 @@
+services:
+  # ── Keycloak Identity Server ─────────────────────────────────────────────────
+  keycloak:
+    image: ${KEYCLOAK_IMAGE:-quay.io/keycloak/keycloak:26.1}
+    container_name: voltforge-keycloak
+    command: ["start-dev"]
+    env_file:
+      - ./config/keycloak.env
+    volumes:
+      - ./keycloak/voltforge-realm.json:/opt/keycloak/data/import/voltforge-realm.json:ro
+      - ./themes:/opt/keycloak/themes:ro
+    ports:
+      - "8080:8080"
+    networks:
+      - voltforge-net
+    restart: unless-stopped
+
+  # ── VoltForge AI Microservice ────────────────────────────────────────────────
+  voltforge-ai:
+    image: ${AI_IMAGE:-ghcr.io/prasadsiva7482/voltforge-ai:latest}
+    build:
+      context: ../Voltforge_AI
+      dockerfile: Dockerfile
+    container_name: voltforge-ai
+    env_file:
+      - ./config/ai.env
+    ports:
+      - "2002:2002"
+    networks:
+      - voltforge-net
+    restart: unless-stopped
+
+  # ── VoltForge Backend API (Spring Boot) ───────────────────────────────────────
+  voltforge-bl:
+    image: ${BL_IMAGE:-ghcr.io/prasadsiva7482/voltforge-bl:latest}
+    build:
+      context: ../Voltforge_BL
+      dockerfile: Dockerfile
+    container_name: voltforge-bl
+    volumes:
+      - ./config/application.yml:/app/config/application.yml:ro
+    environment:
+      - SPRING_CONFIG_ADDITIONAL_LOCATION=file:/app/config/application.yml
+    ports:
+      - "2001:2001"
+    depends_on:
+      - keycloak
+      - voltforge-ai
+    networks:
+      - voltforge-net
+    restart: unless-stopped
+
+  # ── VoltForge Frontend UI (React / Nginx) ────────────────────────────────────
+  voltforge-ui:
+    image: ${UI_IMAGE:-ghcr.io/prasadsiva7482/voltforge-ui:latest}
+    build:
+      context: ../Voltforge_UI
+      dockerfile: Dockerfile
+    container_name: voltforge-ui
+    volumes:
+      - ./config/config.js:/usr/share/nginx/html/config.js:ro
+    depends_on:
+      - voltforge-bl
+    networks:
+      - voltforge-net
+    restart: unless-stopped
+
+  # ── Unified Reverse Proxy Gateway ────────────────────────────────────────────
+  gateway:
+    image: nginx:1.27-alpine
+    container_name: voltforge-gateway
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./gateway/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - voltforge-ui
+      - voltforge-bl
+      - voltforge-ai
+      - keycloak
+    networks:
+      - voltforge-net
+    restart: unless-stopped
+
+networks:
+  voltforge-net:
+    driver: bridge

@@ -1,0 +1,731 @@
+/* ==========================================================================
+   Voltforge Enterprise Authentication Theme - v-app.css
+   Modern, Precision-Crafted Dark Design (Stripe / Linear / Clerk Standard)
+   - Intelligent 2-Column Registration Grid
+   - Proper Register Button -> Login Switcher Hierarchy
+   - Subtle Ambient Glow & Geometric Dot Mesh (Zero Spiderweb Noise)
+   - Infinite Viewport Canvas (Zero Bottom Cutout)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    /* Brand Palette - Tech Volt Teal */
+    --vf-primary: #087f83;
+    --vf-primary-hover: #06666a;
+    --vf-cyan: #06b6d4;
+    --vf-cyan-light: #22d3ee;
+    --vf-cyan-glow: rgba(6, 182, 212, 0.25);
+
+    /* Backgrounds & Canvas */
+    --vf-bg-base: #08090d;
+    --vf-card-bg: rgba(13, 16, 24, 0.94);
+    --vf-card-border: rgba(255, 255, 255, 0.08);
+    --vf-card-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 20px 50px -10px rgba(0, 0, 0, 0.75), 0 0 35px -5px rgba(6, 182, 212, 0.12);
+
+    /* Typography */
+    --vf-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --vf-font-mono: 'JetBrains Mono', Consolas, monospace;
+    --vf-text-title: #f8fafc;
+    --vf-text-body: #e2e8f0;
+    --vf-text-label: #a1a1aa;
+    --vf-text-muted: #71717a;
+    --vf-text-dim: #52525b;
+
+    /* Inputs */
+    --vf-input-bg: #090b10;
+    --vf-input-border: rgba(255, 255, 255, 0.11);
+    --vf-input-border-hover: rgba(255, 255, 255, 0.2);
+    --vf-input-border-focus: #06b6d4;
+    --vf-input-focus-ring: 0 0 0 3px rgba(6, 182, 212, 0.18);
+
+    /* Button */
+    --vf-btn-bg: linear-gradient(180deg, #0891b2 0%, #087f83 100%);
+    --vf-btn-border: rgba(6, 182, 212, 0.45);
+    --vf-btn-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    --vf-btn-hover-shadow: 0 4px 16px rgba(6, 182, 212, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+
+    /* Geometry */
+    --vf-radius-card: 16px;
+    --vf-radius-control: 8px;
+    --vf-transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   Global Reset & Infinite Viewport Background
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+html.login-pf {
+    min-height: 100%;
+    height: auto !important;
+    background-color: var(--vf-bg-base) !important;
+    background-image:
+        radial-gradient(at 50% 0%, rgba(6, 182, 212, 0.14) 0px, transparent 65%),
+        radial-gradient(at 100% 100%, rgba(8, 127, 131, 0.10) 0px, transparent 55%),
+        url('../img/circuit-bg.svg') !important;
+    background-position: center top, right bottom, center center !important;
+    background-repeat: no-repeat, no-repeat, no-repeat !important;
+    background-size: 100% 100%, 100% 100%, cover !important;
+    background-attachment: fixed, fixed, fixed !important;
+    color: var(--vf-text-body);
+    font-family: var(--vf-font) !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+.login-pf body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: auto !important;
+    width: 100%;
+    background: transparent !important;
+    color: var(--vf-text-body);
+    font-family: var(--vf-font) !important;
+    overflow-x: hidden;
+    overflow-y: auto !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+/* Remove old bubbly body pseudo-elements */
+.login-pf body::before,
+.login-pf body::after {
+    display: none !important;
+}
+
+/* ==========================================================================
+   Page Layout & Centering
+   ========================================================================== */
+#kc-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    position: relative;
+    z-index: 2;
+}
+
+#kc-container {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 2rem 1.25rem 3rem 1.25rem !important;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+#kc-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#kc-content-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ==========================================================================
+   Header & Clean Brand Emblem
+   ========================================================================== */
+.login-pf-page-header {
+    width: 100%;
+    padding: 0 0 1rem 0;
+    text-align: center;
+}
+
+#kc-header-wrapper {
+    margin: 0;
+    padding: 0;
+}
+
+.v-app-header-brand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.v-app-logo-bg {
+    width: 40px;
+    height: 40px;
+    background-image: url('../img/v-app-logo.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 0 12px var(--vf-cyan-glow));
+    transition: var(--vf-transition);
+}
+
+.v-app-brand-text {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    background: linear-gradient(180deg, #ffffff 30%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.login-pf-brand {
+    display: none !important;
+}
+
+/* ==========================================================================
+   Enterprise Card Architecture
+   ========================================================================== */
+.card-pf {
+    background: var(--vf-card-bg) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    border: 1px solid var(--vf-card-border) !important;
+    box-shadow: var(--vf-card-shadow) !important;
+    border-radius: var(--vf-radius-card) !important;
+    padding: 2rem 2.25rem 2.25rem 2.25rem !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    box-sizing: border-box !important;
+    margin: 0 auto !important;
+    position: relative;
+    z-index: 20;
+}
+
+/* Wide layout for Registration Page */
+.register .card-pf,
+#kc-register-form-wrapper .card-pf,
+body[data-page-id="login-register"] .card-pf {
+    max-width: 530px !important;
+}
+
+/* Card Header */
+header.login-pf-header {
+    margin-bottom: 1.35rem;
+    text-align: left;
+}
+
+#kc-page-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--vf-text-title);
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+    margin-bottom: 0.25rem;
+}
+
+/* Hide annoying * Required fields banner */
+.instruction,
+.subtitle {
+    display: none !important;
+}
+
+/* Show instructions if it's an error/guidance page */
+#kc-error-message .instruction,
+#kc-info-message .instruction {
+    display: block !important;
+    font-size: 0.875rem !important;
+    color: var(--vf-text-label) !important;
+    margin: 0.75rem 0 !important;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   INTELLIGENT 2-COLUMN REGISTRATION GRID (LINEAR / STRIPE STYLE)
+   ========================================================================== */
+#kc-register-form {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    column-gap: 0.85rem !important;
+    row-gap: 0.95rem !important;
+    width: 100% !important;
+}
+
+/* Row 1: First Name & Last Name (Side by Side) */
+#kc-register-form .form-group:has(#firstName) {
+    grid-column: 1 / 2 !important;
+    order: 1 !important;
+    margin-bottom: 0 !important;
+}
+
+#kc-register-form .form-group:has(#lastName) {
+    grid-column: 2 / 3 !important;
+    order: 2 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Row 2: Email (Full Width) */
+#kc-register-form .form-group:has(#email) {
+    grid-column: 1 / -1 !important;
+    order: 3 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Row 3: Username (Full Width) */
+#kc-register-form .form-group:has(#username) {
+    grid-column: 1 / -1 !important;
+    order: 4 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Row 4: Password & Confirm Password (Side by Side) */
+#kc-register-form .form-group:has(#password) {
+    grid-column: 1 / 2 !important;
+    order: 5 !important;
+    margin-bottom: 0 !important;
+}
+
+#kc-register-form .form-group:has(#password-confirm) {
+    grid-column: 2 / 3 !important;
+    order: 6 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Password rules checklist */
+#kc-register-form .kc-password-rules-wrapper {
+    grid-column: 1 / -1 !important;
+    order: 7 !important;
+    margin: 0 !important;
+}
+
+/* Terms Notice */
+#kc-register-form .vf-terms-notice {
+    grid-column: 1 / -1 !important;
+    order: 8 !important;
+    font-size: 0.775rem !important;
+    color: var(--vf-text-dim) !important;
+    text-align: center !important;
+    line-height: 1.45 !important;
+    margin-top: 0.25rem !important;
+}
+
+#kc-register-form .vf-terms-notice a {
+    color: var(--vf-text-label) !important;
+    text-decoration: underline !important;
+    transition: var(--vf-transition);
+}
+
+#kc-register-form .vf-terms-notice a:hover {
+    color: var(--vf-cyan) !important;
+}
+
+/* Combined Submit Action & Back-to-login Group */
+#kc-register-form .form-group:has(#kc-form-buttons),
+#kc-register-form .form-group:has(#kc-register),
+#kc-register-form .form-group:has(input[type="submit"]) {
+    grid-column: 1 / -1 !important;
+    order: 9 !important;
+    display: flex !important;
+    flex-direction: column-reverse !important; /* Puts Register Button on TOP, Back to Login on BOTTOM */
+    margin-top: 0.5rem !important;
+    margin-bottom: 0 !important;
+    gap: 0.75rem !important;
+}
+
+#kc-register-form #kc-form-buttons {
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+#kc-register-form #kc-form-options {
+    width: 100% !important;
+    margin: 0 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding-top: 0.85rem !important;
+    text-align: center !important;
+}
+
+/* ==========================================================================
+   Form Fields & Controls
+   ========================================================================== */
+.form-group {
+    margin-bottom: 1.15rem;
+    position: relative;
+    width: 100%;
+}
+
+.form-group label,
+label.control-label,
+.pf-c-form__label,
+.pf-c-form__label-text {
+    display: inline-flex !important;
+    align-items: center !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em !important;
+    color: var(--vf-text-label) !important;
+    margin-bottom: 0.4rem !important;
+    text-transform: none !important;
+    transition: var(--vf-transition);
+}
+
+.form-group:focus-within label {
+    color: #ffffff !important;
+}
+
+/* Clean, modern inline required indicator */
+.pf-c-form__label-required,
+span.required {
+    color: var(--vf-cyan) !important;
+    margin-left: 3px !important;
+    display: inline-block !important;
+    font-size: 0.85em !important;
+    font-weight: 600 !important;
+}
+
+/* Input Group reset - zero white artifacts */
+.pf-c-input-group {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+.pf-c-input-group .pf-c-button.pf-m-control {
+    display: none !important;
+}
+
+/* Standardized Enterprise Inputs (38px Height) */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+.pf-c-form-control,
+.form-control,
+.pf-c-input-group > input {
+    width: 100% !important;
+    height: 38px !important;
+    background: var(--vf-input-bg) !important;
+    background-color: var(--vf-input-bg) !important;
+    border: 1px solid var(--vf-input-border) !important;
+    border-radius: var(--vf-radius-control) !important;
+    padding: 0 0.85rem !important;
+    color: #ffffff !important;
+    font-size: 0.85rem !important;
+    font-family: var(--vf-font) !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) inset !important;
+    transition: var(--vf-transition) !important;
+}
+
+input:hover,
+.pf-c-form-control:hover,
+.pf-c-input-group > input:hover {
+    border-color: var(--vf-input-border-hover) !important;
+}
+
+input:focus,
+.pf-c-form-control:focus,
+.form-control:focus,
+.pf-c-input-group > input:focus {
+    border-color: var(--vf-input-border-focus) !important;
+    box-shadow: var(--vf-input-focus-ring) !important;
+    background-color: #0d0f17 !important;
+}
+
+input[type="password"] {
+    padding-right: 42px !important;
+}
+
+input::placeholder {
+    color: var(--vf-text-dim) !important;
+    font-size: 0.85rem;
+}
+
+/* Password Visibility Eye Toggle */
+.v-pwd-toggle {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer;
+    color: var(--vf-text-muted);
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: var(--vf-transition);
+    outline: none;
+    border-radius: 4px;
+}
+
+.v-pwd-toggle:hover {
+    color: var(--vf-cyan) !important;
+    background: rgba(6, 182, 212, 0.1) !important;
+}
+
+/* ==========================================================================
+   Checkboxes & Form Options
+   ========================================================================== */
+#kc-form-options {
+    margin-top: 0.75rem;
+    margin-bottom: 1.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 0.8125rem;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--vf-text-label) !important;
+    font-size: 0.8125rem !important;
+    font-weight: 400 !important;
+    cursor: pointer;
+    margin: 0 !important;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--vf-input-border-hover);
+    border-radius: 4px;
+    background: var(--vf-input-bg);
+    cursor: pointer;
+    display: grid;
+    place-content: center;
+    transition: var(--vf-transition);
+    margin: 0;
+    position: relative;
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    transform: scale(0);
+    transition: 0.12s transform ease-in-out;
+    box-shadow: inset 1em 1em var(--vf-cyan);
+    transform-origin: center;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+input[type="checkbox"]:checked {
+    border-color: var(--vf-cyan);
+    background: rgba(8, 127, 131, 0.3);
+}
+
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+/* Links */
+a,
+#kc-form-options a,
+#kc-registration a,
+.login-pf-page a {
+    color: var(--vf-cyan) !important;
+    text-decoration: none !important;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    transition: var(--vf-transition);
+}
+
+a:hover,
+#kc-form-options a:hover,
+#kc-registration a:hover,
+.login-pf-page a:hover {
+    color: var(--vf-cyan-light) !important;
+    text-decoration: underline !important;
+}
+
+/* ==========================================================================
+   Buttons (Enterprise Solid Gradient)
+   ========================================================================== */
+#kc-form-buttons {
+    margin-top: 1.15rem;
+    margin-bottom: 0.65rem;
+    width: 100%;
+}
+
+input[type="submit"],
+button[type="submit"],
+.submit,
+.pf-c-button.pf-m-primary,
+.submit-primary {
+    width: 100% !important;
+    height: 40px !important;
+    background: var(--vf-btn-bg) !important;
+    color: #ffffff !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em !important;
+    border: 1px solid var(--vf-btn-border) !important;
+    border-radius: var(--vf-radius-control) !important;
+    cursor: pointer !important;
+    box-shadow: var(--vf-btn-shadow) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: var(--vf-transition) !important;
+    outline: none !important;
+}
+
+input[type="submit"]:hover,
+button[type="submit"]:hover,
+.submit:hover,
+.pf-c-button.pf-m-primary:hover,
+.submit-primary:hover {
+    filter: brightness(1.12) !important;
+    box-shadow: var(--vf-btn-hover-shadow) !important;
+    transform: translateY(-1px) !important;
+}
+
+input[type="submit"]:active,
+button[type="submit"]:active,
+.submit:active,
+.pf-c-button.pf-m-primary:active {
+    transform: translateY(0) !important;
+    filter: brightness(0.98) !important;
+}
+
+/* Registration Switcher on Login page */
+#kc-registration-container {
+    margin-top: 1.15rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+    font-size: 0.8125rem;
+    color: var(--vf-text-muted);
+}
+
+#kc-registration-container span {
+    margin-right: 4px;
+}
+
+#kc-registration-container a {
+    font-weight: 600 !important;
+}
+
+/* ==========================================================================
+   Alerts & Notifications
+   ========================================================================== */
+.alert,
+.pf-c-alert {
+    border-radius: 8px !important;
+    padding: 0.75rem 1rem !important;
+    margin-bottom: 1.25rem !important;
+    font-size: 0.8125rem !important;
+    line-height: 1.45 !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    border: 1px solid transparent !important;
+}
+
+.alert-error,
+.pf-c-alert.pf-m-danger {
+    background: rgba(239, 68, 68, 0.12) !important;
+    border-color: rgba(239, 68, 68, 0.3) !important;
+    color: #fca5a5 !important;
+}
+
+.alert-success,
+.pf-c-alert.pf-m-success {
+    background: rgba(16, 185, 129, 0.12) !important;
+    border-color: rgba(16, 185, 129, 0.3) !important;
+    color: #86efac !important;
+}
+
+.kc-feedback-text,
+.pf-c-form__helper-text.pf-m-error,
+span.error,
+.error-message {
+    color: #f87171 !important;
+    font-size: 0.75rem !important;
+    margin-top: 0.3rem !important;
+    display: block !important;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   Enterprise Footer
+   ========================================================================== */
+.v-app-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--vf-text-dim);
+    letter-spacing: 0.02em;
+    z-index: 10;
+}
+
+.v-app-footer .v-highlight {
+    color: var(--vf-text-label);
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   Mobile Responsive Adjustments
+   ========================================================================== */
+@media (max-width: 580px) {
+    #kc-container {
+        padding: 1.25rem 0.85rem 2rem 0.85rem !important;
+    }
+
+    .card-pf {
+        padding: 1.5rem 1.15rem 1.5rem 1.15rem !important;
+        border-radius: 12px !important;
+    }
+
+    /* Single column collapse on mobile */
+    #kc-register-form {
+        grid-template-columns: 1fr !important;
+        row-gap: 0.9rem !important;
+    }
+
+    #kc-register-form .form-group {
+        grid-column: 1 / -1 !important;
+    }
+
+    .v-app-brand-text {
+        font-size: 1.45rem;
+    }
+
+    .v-app-logo-bg {
+        width: 36px;
+        height: 36px;
+    }
+
+    #kc-page-title {
+        font-size: 1.2rem;
+    }
+}

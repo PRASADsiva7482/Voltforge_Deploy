@@ -1,0 +1,71 @@
+# =============================================================================
+# VoltForge Backend API (Spring Boot) — External Azure Production Configuration
+# Mounted dynamically into /app/config/application.yml
+# =============================================================================
+
+server:
+  port: 2001
+  servlet:
+    context-path: /voltForge-app
+
+spring:
+  application:
+    name: voltforge-app
+
+  threads:
+    virtual:
+      enabled: true
+
+  datasource:
+    url: jdbc:mysql://mysql-voltforge-prod-001.mysql.database.azure.com:3306/voltforge_db?sslMode=REQUIRED&useSSL=true&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
+    username: voltadmin
+    password: VoltForge@2026!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      pool-name: VoltForge-HikariCP
+      maximum-pool-size: 50
+      minimum-idle: 10
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 20000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+
+  flyway:
+    enabled: false
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://voltforge-lkc7bzuikvaz2.westus2.cloudapp.azure.com/realms/voltforge-realm
+          jwk-set-uri: http://keycloak:8080/realms/voltforge-realm/protocol/openid-connect/certs
+
+keycloak:
+  enabled: false
+  auth-server-url: http://keycloak:8080
+  realm: voltforge-realm
+  resource: VOLT-Canvas
+  credentials:
+    secret: BpJfF6q1sdld27MOOXonOFC84GZlHyrC
+
+app:
+  cors:
+    allowed-origins: https://voltforge-lkc7bzuikvaz2.westus2.cloudapp.azure.com,http://voltforge-lkc7bzuikvaz2.westus2.cloudapp.azure.com,http://4.154.189.115,https://4.154.189.115,http://localhost:3000,http://localhost:5173
+    allowed-methods: GET,POST,PUT,DELETE,PATCH,OPTIONS
+    allowed-headers: "*"
+    allow-credentials: true
+    max-age: 3600
+  rate-limit:
+    requests-per-minute: 60
+  ai:
+    environment: development
+    model:
+      url: http://voltforge-ai:2002/voltForge-ai
+      api-token: voltforge-ai-internal-service-secret-token-v1
+      timeout: 15
+      streaming-timeout: 60
