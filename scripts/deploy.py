@@ -210,6 +210,11 @@ def deploy_config(ssh, sftp):
         print("  -> Uploading gateway/nginx.conf...")
         sftp.put(nginx_conf, "/opt/voltforge/azureDeploy/gateway/nginx.conf")
 
+    compose_file = os.path.join(AZURE_DEPLOY_DIR, "docker-compose.yml")
+    if os.path.exists(compose_file):
+        print("  -> Uploading docker-compose.yml...")
+        sftp.put(compose_file, "/opt/voltforge/azureDeploy/docker-compose.yml")
+
     print("[*] Applying configuration changes to containers...")
     remote_cmds = """
 # 1. Update UI config.js live in container
