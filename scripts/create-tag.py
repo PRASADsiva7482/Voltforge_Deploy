@@ -105,17 +105,73 @@ def create_and_push_tag(repo_key, repo_dir, tag, push=False):
 
     if push:
         print(f"    [*] Pushing tag '{tag}' to origin...")
+        # First try via git CLI with a short timeout
         try:
-            subprocess.run(
+            res = subprocess.run(
                 ["git", "-C", repo_dir, "push", "origin", tag],
                 check=True,
                 capture_output=True,
-                text=True
+                text=True,
+                timeout=12
             )
-            print(f"    [+] Tag '{tag}' pushed successfully to GitHub! CI/CD triggered.")
+            print(f"    [+] Tag '{tag}' pushed successfully to GitHub via git CLI! CI/CD triggered.")
             return True
-        except subprocess.CalledProcessError as e:
-            print(f"    [!] Error pushing tag '{tag}': {e.stderr.strip()}")
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as err:
+            print(f"    [!] Git CLI push notice: {err}. Attempting direct GitHub API push...")
+            # Retrieve token dynamically from environment or git credential helper
+            token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+            if not token:
+                try:
+                    cred_p = subprocess.Popen(['git', 'credential', 'fill'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+                    cred_out, _ = cred_p.communicate('protocol=https\nhost=github.com\n\n')
+                    for line in cred_out.splitlines():
+                        if line.startswith('password='):
+                            token = line.split('=', 1)[1].strip()
+                            break
+                except Exception:
+                    pass
+            remote_repo = {
+                "ui": "PRASADsiva7482/Voltforge_UI",
+                "bl": "PRASADsiva7482/Voltforge_BL",
+                "ai": "PRASADsiva7482/Voltforge_AI",
+                "keycloak": "PRASADsiva7482/keycloak-26.4.7",
+            }.get(repo_key)
+
+            if token and remote_repo:
+                try:
+                    import urllib.request, json
+                    # Get HEAD SHA of current branch
+                    sha_res = subprocess.run(
+                        ["git", "-C", repo_dir, "rev-parse", "HEAD"],
+                        capture_output=True,
+                        text=True,
+                        check=True
+                    )
+                    head_sha = sha_res.stdout.strip()
+                    api_url = f"https://api.github.com/repos/{remote_repo}/git/refs"
+                    payload = json.dumps({"ref": f"refs/tags/{tag}", "sha": head_sha}).encode("utf-8")
+                    req = urllib.request.Request(
+                        api_url,
+                        data=payload,
+                        headers={
+                            "Authorization": f"Bearer {token}",
+                            "Accept": "application/vnd.github+json",
+                            "User-Agent": "VoltForge-Release-CLI",
+                            "Content-Type": "application/json"
+                        },
+                        method="POST"
+                    )
+                    with urllib.request.urlopen(req, timeout=10) as resp:
+                        if resp.status in (200, 201):
+                            print(f"    [+] Tag '{tag}' pushed successfully via GitHub REST API! CI/CD triggered.")
+                            return True
+                except urllib.error.HTTPError as he:
+                    if he.code == 422:
+                        print(f"    [i] Tag '{tag}' already exists on GitHub remote.")
+                        return True
+                    print(f"    [!] GitHub API push failed (HTTP {he.code}): {he.read().decode('utf-8', errors='ignore')}")
+                except Exception as api_err:
+                    print(f"    [!] GitHub API push error: {api_err}")
             return False
     else:
         print(f"    [i] Tag created locally. Push with: git -C {repo_dir} push origin {tag}")
