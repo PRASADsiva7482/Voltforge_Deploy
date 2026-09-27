@@ -151,21 +151,39 @@ def deploy_ai(ssh, sftp):
     print("=" * 60)
 
     tar_path = os.path.join(AZURE_DEPLOY_DIR, "ai-src.tar.gz")
-    print("[1/3] Packaging Voltforge_AI source code...")
-    
-    exclude_dirs = {'__pycache__', '.pytest_cache', '.venv', '.git'}
-    exclude_exts = {'.npz', '.pt', '.bin', '.pyc'}
+    print("[1/3] Packaging Voltforge_AI source code...", flush=True)
+
+    included_dirs = [
+        "api", "api_contract", "engine", "model", "context_compiler",
+        "data_governance", "electronics_corpus", "engineering_tools",
+        "evaluation", "feedback_governance", "grounding", "memory_store",
+        "internet_retrieval", "local_retrieval", "task_schema",
+        "hardware_coverage", "tests"
+    ]
+    included_files = [
+        "requirements.txt", "circuit_verifier.py", "web_search_engine.py",
+        "observability.py", "config.py", "config.json", "main.py",
+        "app.py", "dataset.txt", "Dockerfile"
+    ]
 
     with tarfile.open(tar_path, "w:gz") as tar:
-        for root, dirs, files in os.walk(AI_DIR):
-            dirs[:] = [d for d in dirs if d not in exclude_dirs]
-            for f in files:
-                if any(f.endswith(ext) for ext in exclude_exts):
-                    continue
-                abs_f = os.path.join(root, f)
-                rel_f = os.path.relpath(abs_f, AI_DIR)
-                tar.add(abs_f, arcname=rel_f)
-    print(f"  [+] Package size: {round(os.path.getsize(tar_path) / 1024, 1)} KB")
+        for f in included_files:
+            fp = os.path.join(AI_DIR, f)
+            if os.path.exists(fp):
+                tar.add(fp, arcname=f)
+        for d in included_dirs:
+            dp = os.path.join(AI_DIR, d)
+            if os.path.exists(dp):
+                for root, dirs, files in os.walk(dp):
+                    dirs[:] = [sub for sub in dirs if sub not in {"__pycache__", ".pytest_cache"}]
+                    for file in files:
+                        if file.endswith((".pyc", ".npz", ".bin", ".pt")):
+                            continue
+                        full = os.path.join(root, file)
+                        rel = os.path.relpath(full, AI_DIR)
+                        tar.add(full, arcname=rel)
+
+    print(f"  [+] Package size: {round(os.path.getsize(tar_path) / 1024, 1)} KB", flush=True)
 
     print("[2/3] Uploading source to Azure VM...")
     sftp.put(tar_path, "/tmp/ai-src.tar.gz")
