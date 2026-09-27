@@ -12,6 +12,13 @@ if (typeof window !== 'undefined' && window.crypto && !window.crypto.randomUUID)
 // Loaded by index.html before React initializes (<script src="/config.js"></script>)
 // =============================================================================
 window.config = {
+  // Standardized baseUrls mapping
+  baseUrls: {
+    BL: window.location.origin + '/voltForge-app/api/v1',
+    WS: (window.location.protocol === 'https:' ? 'wss:' : 'ws:') + '//' + window.location.host + '/voltForge-app/ws-native',
+    AI: window.location.origin + '/voltForge-ai',
+    KEYCLOAK: window.location.origin,
+  },
   keycloak: {
     url: window.location.origin,
     realm: 'voltforge-realm',
