@@ -69,3 +69,9 @@ app:
       api-token: voltforge-ai-internal-service-secret-token-v1
       timeout: 15
       streaming-timeout: 60
+  simulation:
+    compiler:
+      mode: REMOTE
+      remote-url: https://hexi.wokwi.com/build
+      arduino-cli-path: arduino-cli
+      timeout-seconds: 45
