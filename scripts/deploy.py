@@ -115,6 +115,9 @@ def deploy_bl(ssh, sftp):
     with tarfile.open(tar_path, "w:gz") as tar:
         tar.add(os.path.join(BL_DIR, "pom.xml"), arcname="pom.xml")
         tar.add(os.path.join(BL_DIR, "src"), arcname="src")
+        dockerfile_path = os.path.join(BL_DIR, "Dockerfile")
+        if os.path.exists(dockerfile_path):
+            tar.add(dockerfile_path, arcname="Dockerfile")
     print(f"  [+] Package size: {round(os.path.getsize(tar_path) / 1024, 1)} KB")
 
     print("[2/3] Uploading source to Azure VM...")
